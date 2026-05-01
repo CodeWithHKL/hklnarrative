@@ -100,7 +100,7 @@ export const articles: NewsArticle[] = [
     url: "#",
     title: "The Rise of the One-Person Billion Dollar Startup",
     description: "AI automation allows solo founders to manage global logistics and customer service at an unprecedented scale.",
-    imageUrl: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "https://www.cyberark.com/wp-content/uploads/2025/03/ai-agents-collaborative-intelligence1.jpg",
     category: "Business",
     date: "Mar 23, 2026",
     priority: true,

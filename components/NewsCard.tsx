@@ -18,14 +18,27 @@ export default function NewsCard({ article }: { article: NewsArticle }) {
         article.priority ? "md:col-span-2 md:flex-row" : "col-span-1"
       }`}
     >
-      <div className={`relative overflow-hidden rounded-2xl ${article.priority ? "h-64 md:h-full md:w-1/2" : "h-48 w-full"}`}>
+      {/* IMAGE CONTAINER */}
+      <div className={`relative overflow-hidden rounded-2xl bg-zinc-100 dark:bg-zinc-800 ${
+        article.priority ? "h-64 md:h-full md:w-1/2" : "h-48 w-full"
+      }`}>
         <Image
           src={article.imageUrl}
-          alt=""
+          alt={article.title}
           fill
           className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-          unoptimized
+          /* 
+             Optimization Logic:
+             - 100vw on mobile
+             - 50vw on medium screens (priority cards)
+             - 33vw on large grids
+          */
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          /* Preload images for priority/featured articles */
+          priority={article.priority}
         />
+        
+        {/* CATEGORY TAG */}
         <div className="absolute left-3 top-3">
           <span className="rounded-full bg-black/50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-md">
             {article.category}
@@ -33,18 +46,29 @@ export default function NewsCard({ article }: { article: NewsArticle }) {
         </div>
       </div>
 
+      {/* CONTENT CONTAINER */}
       <div className="flex flex-1 flex-col justify-between p-4">
         <div>
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-medium text-zinc-400">{article.date}</span>
             <ArrowUpRight className="h-4 w-4 text-zinc-300 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-black dark:group-hover:text-white" />
           </div>
-          <h2 className={`mt-2 font-semibold tracking-tight text-black dark:text-white ${article.priority ? "text-2xl" : "text-lg"}`}>
+          
+          <h2 className={`mt-2 font-semibold tracking-tight text-black dark:text-white ${
+            article.priority ? "text-2xl" : "text-lg"
+          }`}>
             {article.title}
           </h2>
+          
           <p className="mt-2 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 line-clamp-2">
             {article.description}
           </p>
+        </div>
+
+        {/* OPTIONAL: ADDED SOURCE INDICATOR */}
+        <div className="mt-4 flex items-center gap-2">
+          <div className="h-1 w-1 rounded-full bg-zinc-300" />
+          <span className="text-[10px] text-zinc-400 uppercase tracking-tighter">View Full Story</span>
         </div>
       </div>
     </motion.a>
